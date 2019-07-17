@@ -1,0 +1,305 @@
+<div class="mt-5 mb-5 ">
+  <div class="row">
+    <div class="col-md-12">
+      <h5>Add Employee</h5>
+    </div>
+    <div class="col-md-12">
+      <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="personaInfoGroup">
+          <form [formGroup]="personaInfoGroup">
+            <ng-template matStepLabel>Personal Information</ng-template>
+            <div class="row">
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="First name"  formControlName="Fname" class="col-md-12" value="">
+                  <mat-error *ngIf="p.Fname.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="p.Fname.errors.required">First Name is required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Middle name" formControlName="Mname" >
+                  <mat-error *ngIf="p.Mname.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="p.Mname.errors.required">Middle Name is required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Last Name" formControlName="Lname">
+                  <mat-error *ngIf="p.Lname.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="p.Lname.errors.required">Last Name is required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-12 mb-5"></div>
+
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Email" formControlName="Email">
+                  <mat-error *ngIf="p.Email.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="p.Email.errors.required">Email is required</div>
+                    <div *ngIf="p.Email.errors.email">Email must be a valid email address</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <textarea matInput placeholder="Address" formControlName="Address"></textarea>
+                  <mat-error *ngIf="p.Address.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="p.Address.errors.required">Address is required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Phone Number" formControlName="Phoneno">
+                  <mat-error *ngIf="p.Phoneno.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="p.Phoneno.errors.required">Phone Number is required</div>
+                    <div *ngIf="p.Phoneno.errors.pattern">Only Numbers are Invalid.</div>
+                    <div *ngIf="p.Phoneno.errors.minlength">Phone Number requied only 10 characters.</div>
+                    <div *ngIf="personaInfoGroup.get('Phoneno').hasError('maxlength')">
+                      <span style="color: red;">Phone Number requied only 10 characters.</span>
+                    </div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-12 mb-5"></div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" placeholder="Choose a DOB" formControlName="DOB">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                  <mat-error *ngIf="p.DOB.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="p.DOB.errors.required">DOB is required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+              <!-- <div class="col-md-4">
+                <mat-radio-group aria-label="Select an option" formControlName="gender">
+                  <mat-radio-button value="male">Male</mat-radio-button>
+                  <mat-radio-button value="female">Female</mat-radio-button>
+                </mat-radio-group>
+              </div> -->
+
+              <div class="mt-3">
+                <button mat-button matStepperNext class="btn btn-primary">Next</button>
+              </div>
+
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="BusinessInfoGroup">
+          <form [formGroup]="BusinessInfoGroup">
+            <ng-template matStepLabel>Bisness INformation</ng-template>
+
+            <div class="row">
+
+              <div class="col-md-4">
+                <label class="form-label mb-2">Add Resume :</label>
+                <input type="file" accept=".doc, .docx,.txt,.pdf" (change)="onResumeselected($event.target.files)"
+                  formControlName="Resume" name="filename" />
+                <mat-error *ngIf="busInfoSubmit && b.Resume.errors" class="invalid-feedback" style="font-size: 15px">
+                  <div *ngIf="b.Resume.errors.required">Resume Is Required</div>
+                  <mat-error *ngIf="resumeMessage" class="invalid-feedback">
+                    <div>only .doc,.pdf,.txt are supported</div>
+                  </mat-error>
+                </mat-error>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Refrence Name" formControlName="Refrence">
+                  <mat-error *ngIf="b.Refrence.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="b.Refrence.errors.required">Refrence is required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Total Experience" formControlName="TotalExperience">
+                  <mat-error *ngIf="b.TotalExperience.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="b.TotalExperience.errors.required">Toale Experience is required</div>
+                    <div *ngIf="b.TotalExperience.errors.pattern">Toale Experience is Invalid : 1.2 | 2</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-12 mb-5"></div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Salary" formControlName="Salary">
+                  <mat-error *ngIf="b.Salary.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="b.Salary.errors.required">Salary is required</div>
+                    <div *ngIf="b.Salary.errors.pattern">Salary is Invalid : 12000 | 12,000</div>
+
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4 mb-4">
+                <mat-form-field>
+                  <mat-label>Select Designation</mat-label>
+                  <!-- <select matNativeControl formControlName="Designation">
+                    <option *ngFor="let item of  desOpt" [value]=item.ID>
+                      {{item.Name}}
+                    </option>
+
+                  </select> -->
+
+                  <mat-select formControlName="Designation">
+                    <mat-option *ngFor="let food of desOpt" [value]="food.ID">
+                      {{food.Name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="b.Designation.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="b.Designation.errors.required">Designation is required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker1" placeholder="Choose a DOJ" formControlName="DOJ">
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker #picker1></mat-datepicker>
+                  <mat-error *ngIf="b.DOJ.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="b.DOJ.errors.required">DOJ is required</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-12 mb-5"></div>
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker2" placeholder="Choose a DOL" formControlName="DOL">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+              </div>
+
+
+              <div col-md-4>
+                <button mat-button matStepperPrevious class="btn btn-primary mr-3">Back</button>
+                <button mat-button matStepperNext class="btn btn-primary" (click)="next()">Next</button>
+              </div>
+
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="securitiInfoGroup">
+          <form [formGroup]="securitiInfoGroup" (ngSubmit)="onSubmit()">
+            <ng-template matStepLabel>Securiti Information</ng-template>
+            <div class="row">
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Adhar Number" formControlName="Aadharno">
+                  <mat-error *ngIf="s.Aadharno.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="s.Aadharno.errors.required">Adhar Number is required</div>
+                    <div *ngIf="s.Aadharno.errors.minlength">Adhar Number requied only 16 Number</div>
+                    <div *ngIf="s.Aadharno.errors.pattern">Adhar Number is InvaliD</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="col-md-12">
+                      <label class="form-label mb-2">Add Adhar Photo</label>
+                    </div>
+                    <div class="col-md-12">
+                      <input type="file" accept=".png,.jpeg,.jpg" (change)="previewadhar($event.target.files)"
+                        formControlName="AadharPhoto" name="filename" />
+
+                    </div>
+                    <div class="col-md-12">
+                      <mat-error *ngIf="s.AadharPhoto.errors" class="invalid-feedback" style="font-size: 15px">
+                        <div *ngIf="secInfoSubmit &&  s.AadharPhoto.errors.required">Adhar PhotpoIs Required</div>
+                      </mat-error>
+                      <mat-error *ngIf="adharMessage" class="invalid-feedback">
+                        <div>only images are supported</div>
+                      </mat-error>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="col-md-12">
+                      <img [src]="adharUrlPath" class="img-thumbnail" height="80" width="80" *ngIf="adharUrlPath" />
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+              <div class="col-md-4">
+                <mat-form-field>
+                  <input matInput placeholder="Pan Number" formControlName="Panno">
+                  <mat-error *ngIf="s.Panno.errors" class="invalid-feedback" style="font-size: 15px">
+                    <div *ngIf="s.Panno.errors.required">Pan Number is required</div>
+                    <div *ngIf="s.Panno.errors.minlength">Pan Number requied only 10 Charecter</div>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-12 mb-5"></div>
+
+              <div class="col-md-4 pl-0">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="col-md-12">
+                      <label class="form-label mb-2">Add PanCard Photo</label>
+                    </div>
+                    <div class="col-md-12">
+                      <input type="file" accept=".png,.jpeg,.jpg" (change)="previewpan($event.target.files)"
+                        formControlName="PanPhoto" name="filename" />
+                    </div>
+                    <div class="col-md-12">
+                      <mat-error *ngIf="s.PanPhoto.errors" class="invalid-feedback" style="font-size: 15px">
+                        <div *ngIf="secInfoSubmit &&  s.PanPhoto.errors.required">Pancard Photo Is Required</div>
+                      </mat-error>
+                      <mat-error *ngIf="panMessage" class="invalid-feedback">
+                        <div>only images are supported</div>
+                      </mat-error>
+                    </div>
+
+                  </div>
+                  <div class="col-md-4">
+
+                    <div class="col-md-12">
+                      <img [src]="panUrlPath" class="img-thumbnail" height="80" width="80" *ngIf="panUrlPath" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div col-md-4>
+                <button mat-button matStepperPrevious class="btn btn-primary mr-3">Back</button>
+                <button mat-button matStepperNext class="btn btn-primary">{{btnLable}}</button>
+              </div>
+            </div>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</div>

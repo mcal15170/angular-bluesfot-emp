@@ -1,0 +1,15 @@
+mat-form-field{
+    width: 100%
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  mat-slider {
+    width: 300px;
+  }
+
+  mat-slider-thumb-label-text{
+width: 100px;
+  }

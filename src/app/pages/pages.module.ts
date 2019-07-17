@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { AuthModule } from "./auth/auth.module";
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeModule } from './home/home.module';
+import { EmplyoeeModule } from './emplyoee/emplyoee.module';
+import { PageNotFoundModule } from './pageNotFound/pageNotFound.module';
+
 
 
 @NgModule({
@@ -11,7 +14,9 @@ import { HomeModule } from './home/home.module';
     CommonModule,
     AuthModule,
     ReactiveFormsModule,
-    HomeModule
+    HomeModule,
+    EmplyoeeModule,
+    PageNotFoundModule,
   ],
   declarations: [
 

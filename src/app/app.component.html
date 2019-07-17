@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<div>
+  <ng-template [ngIf]="status">
+    <app-header></app-header>
+  </ng-template>
+  <div class="container-fluid" [ngClass]="{mt: status}">
+    <router-outlet></router-outlet>
+  </div>
+  <ng-template [ngIf]="status">
+    <app-footer></app-footer>
+  </ng-template>
+
+</div>
