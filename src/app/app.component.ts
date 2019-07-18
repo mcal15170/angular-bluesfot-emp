@@ -10,7 +10,6 @@ import { Location } from "@angular/common";
 })
 export class AppComponent implements OnInit {
 
-
   title = 'ang-employee';
   route: string;
   status: boolean
@@ -26,7 +25,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    if (localStorage.getItem('token')) {
+      if (this.location.path() === '/login') {
+        window.location.href = '/page/home';
+      }
+    }
   }
 
 }

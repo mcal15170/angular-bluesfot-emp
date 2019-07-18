@@ -16,6 +16,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { EmpService } from './emp.service';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatIconModule} from '@angular/material/icon';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
+// import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -32,7 +36,11 @@ import { EmpService } from './emp.service';
     MatNativeDateModule,
     MatRadioModule,
     MatSelectModule,
+    MatExpansionModule,
+    MatIconModule,
     MatFormFieldModule,
+    // BsDatepickerModule,
+    NgxImageZoomModule.forRoot()
   ],
   declarations: [
     EmpComponent,

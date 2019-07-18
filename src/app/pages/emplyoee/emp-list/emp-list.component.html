@@ -1,29 +1,63 @@
 <div class="mt-5 mb-5 ">
-  <div class="row">
-    <div class="col-md-8">
-      <h5>Employee List</h5>
-    </div>
-    <div class="col-md-4">
-      <div class="float-right">
-        <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Serach">
-        </mat-form-field>
-      </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Employee List</h5>
+        </div>
+        <div class="col-md-6 float-right">
 
-    </div>
-    <div class="col-md-12">
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-        <ng-container matColumnDef="Fname">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.Fname}} </td>
-        </ng-container>
+            <form [formGroup]="filterForm" (ngSubmit)="filterEmployee(filterForm.value)">
+                <div class="row col-md-12">
+                    <div class="col-md-4">
+                        <mat-form-field>
+                            <mat-label>Select Designation</mat-label>
+                            <mat-select formControlName="desId">
+                                <mat-option *ngFor="let item of filterOptions" [value]="item.ID">{{item.Name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-md-3">
+                         <input type="text" placeholder="Daterangepicker" class="form-control" formControlName="serchDate" bsDaterangepicker [bsConfig]="{ isAnimated: true }">
+                    </div> -->
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="General Serach" formControlName="genSerch">
+                        </mat-form-field>
+                    </div>
 
-        <ng-container matColumnDef="Email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-          <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
-        </ng-container>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-primary pb-0  mr-2" type="submit">
+                            <i class="material-icons">
+                                arrow_forward
+                            </i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark pb-0" (click)="getEmpList()">
+                            <i class="material-icons">
+                                refresh
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
-        <!-- <ng-container matColumnDef="DOB">
+                <ng-container matColumnDef="#">
+                    <th mat-header-cell *matHeaderCellDef>#</th>
+                    <td mat-cell *matCellDef="let element"><i data-toggle="modal" data-target="#EmpModel" (click)="popupEmpDetail(element)" class="fa fa-plus-circle"></i></td>
+                </ng-container>
+
+                <ng-container matColumnDef="Fname">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Fname}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="DOB">
           <th mat-header-cell *matHeaderCellDef> Birth Date </th>
           <td mat-cell *matCellDef="let element"> {{element.DOB}} </td>
         </ng-container>
@@ -36,101 +70,277 @@
 
 
 
-        <ng-container matColumnDef="DesignationName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Designation </th>
-          <td mat-cell *matCellDef="let element"> {{element.DesignationName}} </td>
-        </ng-container>
+                <ng-container matColumnDef="DesignationName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Designation </th>
+                    <td mat-cell *matCellDef="let element"> {{element.DesignationName}} </td>
+                </ng-container>
 
-        <!-- <ng-container matColumnDef="Refrence">
+                <!-- <ng-container matColumnDef="Refrence">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Refrence </th>
           <td mat-cell *matCellDef="let element"> {{element.Refrence}} </td>
         </ng-container> -->
 
-        <ng-container matColumnDef="Salary">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary </th>
-          <td mat-cell *matCellDef="let element"> {{element.Salary}} </td>
-        </ng-container>
+                <ng-container matColumnDef="Salary">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Salary </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Salary}} </td>
+                </ng-container>
 
-        <ng-container matColumnDef="TotalExperience">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> TotalExperience </th>
-          <td mat-cell *matCellDef="let element"> {{element.TotalExperience}} </td>
-        </ng-container>
+                <ng-container matColumnDef="TotalExperience">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TotalExperience </th>
+                    <td mat-cell *matCellDef="let element"> {{element.TotalExperience}} </td>
+                </ng-container>
 
-        <!-- <ng-container matColumnDef="Resume">
+                <!-- <ng-container matColumnDef="Resume">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Resume </th>
           <td mat-cell *matCellDef="let element"> {{element.LastUpdatedResume}} </td>
         </ng-container> -->
 
-        <ng-container matColumnDef="AadharNo">
-          <th mat-header-cell *matHeaderCellDef> Aadhar-No </th>
-          <td mat-cell *matCellDef="let element"> {{element.AadharNo}} </td>
-        </ng-container>
+                <ng-container matColumnDef="AadharNo">
+                    <th mat-header-cell *matHeaderCellDef> Aadhar-No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.AadharNo}} </td>
+                </ng-container>
 
-        <ng-container matColumnDef="AadharPhoto">
-          <th mat-header-cell *matHeaderCellDef> Aadhar-Photo </th>
-          <td mat-cell *matCellDef="let element">
-            <img data-toggle="modal" data-target="#MyModal"
-              [src]="element.AadharPhoto?element.AadharPhoto:'../../../../assets/img/aadhar-card.jpg'"
-              alt="Aadhar Card Photo" (click)="openDialog(element.AadharPhoto,element.PanPhoto,element.Fname ,'Aadhar')"
-              style="cursor: pointer" width="50" height="50">
-          </td>
-        </ng-container>
+                <ng-container matColumnDef="AadharPhoto">
+                    <th mat-header-cell *matHeaderCellDef> Aadhar-Photo </th>
+                    <td mat-cell *matCellDef="let element">
+                        <img data-toggle="modal" data-target="#ImgModal" [src]="element.AadharPhoto?element.AadharPhoto:'../../../../assets/img/aadhar-card.jpg'" alt="Aadhar Card Photo" (click)="openDialog(element.AadharPhoto,element.PanPhoto,element.Fname ,'Aadhar')" style="cursor: pointer"
+                            width="50" height="50">
+                    </td>
+                </ng-container>
 
 
 
-        <ng-container matColumnDef="PanNo">
-          <th mat-header-cell *matHeaderCellDef> Pan-No</th>
-          <td mat-cell *matCellDef="let element"> {{element.PanNo}} </td>
-        </ng-container>PanPhoto
+                <ng-container matColumnDef="PanNo">
+                    <th mat-header-cell *matHeaderCellDef> Pan-No</th>
+                    <td mat-cell *matCellDef="let element"> {{element.PanNo}} </td>
+                </ng-container>PanPhoto
 
-        <ng-container matColumnDef="PanPhoto">
-          <th mat-header-cell *matHeaderCellDef> Pan-Photo </th>
-          <td mat-cell *matCellDef="let element">
-            <img data-toggle="modal" data-target="#MyModal"
-              [src]="element.PanPhoto?element.PanPhoto:'../../../../assets/img/pancard_service.png'"
-              alt="Pan Card Photo" (click)="openDialog(element.PanPhoto,element.AadharPhoto,element.Fname ,'Pan')"
-              style="cursor: pointer" width="50" height="50">
-          </td>
-        </ng-container>
+                <ng-container matColumnDef="PanPhoto">
+                    <th mat-header-cell *matHeaderCellDef> Pan-Photo </th>
+                    <td mat-cell *matCellDef="let element">
+                        <img data-toggle="modal" data-target="#ImgModal" [src]="element.PanPhoto?element.PanPhoto:'../../../../assets/img/pancard_service.png'" alt="Pan Card Photo" (click)="openDialog(element.PanPhoto,element.AadharPhoto,element.Fname ,'Pan')" style="cursor: pointer"
+                            width="50" height="50">
+                    </td>
+                </ng-container>
 
-        <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <td mat-cell *matCellDef="let element">
-            <button type="button" class="btn btn-danger mr-2" (click)="deleteEmployee(element.UserID)"><i
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button type="button" class="btn btn-danger mr-2" (click)="deleteEmployee(element.UserID)"><i
                 class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-primary" (click)="updateEmployee(element.UserID)"><i
+                        <button type="button" class="btn btn-primary" (click)="updateEmployee(element.UserID)"><i
                 class="fa fa-pencil"></i></button>
-          </td>
-        </ng-container>
+                    </td>
+                </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      <mat-paginator [length]="totalRecords" [pageSize]="10" [pageSizeOptions]="[10, 20, 100]">
-      </mat-paginator>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="MyModal">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{name}} {{photoname}} Card Photo</h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-
-        <img class="col-md-12 pr-0 pl-0 mb-3" [src]=photUrl1 alt="Trulli" width="450" height="400">
-        <div class="mb-2 text-center">
-          <img [src]="photUrl2" class="img-thumbnail" (click)=setPopupUrl(photUrl1,photUrl2) height="80" width="80"
-            *ngIf="photUrl2" />
-          <p class="">{{this.photoname === 'Aadhar' ? 'Pan' : 'Aadhar'}} Card</p>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="totalRecords" [pageSize]="5" [pageSizeOptions]="[5, 20, 100]">
+            </mat-paginator>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
     </div>
-  </div>
 </div>
+
+<div class="modal fade" id="ImgModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{name}} {{photoname}} Card Photo</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- <ngx-image-zoom [thumbImage]=photUrl1 [fullImage]=photUrl1 [magnification]="1" [circularLens]="true" [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="150" [lensHeight]="150"></ngx-image-zoom> -->
+                        <img id="myimage" class="pr-0 pl-0 mb-3" [src]=photUrl1 alt="Trulli" width="100%" height="400px">
+                    </div>
+                    <div class="col-md-6">
+                        <div id="myresult" class="img-zoom-result"></div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <div class="mb-2 text-center">
+                            <img [src]="photUrl2" class="img-thumbnail" (click)=setPopupUrl(photUrl1,photUrl2) height="80" width="80" *ngIf="photUrl2" />
+                            <p class="">{{this.photoname === 'Aadhar' ? 'Pan' : 'Aadhar'}} Card</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="EmpModel" *ngIf="EmpDetailForPopup">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{EmpDetailForPopup.Fname}} Details</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <mat-accordion class="example-headers-align col-md-12">
+                        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                            <mat-expansion-panel-header>
+                                <div class="container row ml-0 pl-0">
+                                    <div class="col-md-11 pl-0">
+                                        <mat-panel-title>
+                                            <p class="text-primary">Personal data</p>
+                                        </mat-panel-title>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <mat-panel-description>
+                                            <mat-icon class="text-primary">account_circle</mat-icon>
+                                        </mat-panel-description>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel-header>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <b>Full Name</b>
+                                    <p>{{EmpDetailForPopup.Fname}} {{EmpDetailForPopup.Mname}} {{EmpDetailForPopup.Lname}}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>Email</b>
+                                    <p>{{EmpDetailForPopup.Email}}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>Address</b>
+                                    <p>{{EmpDetailForPopup.Address}}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>Phone Number</b>
+                                    <p>{{EmpDetailForPopup.PhoneNumber}}</p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <b>DOB</b>
+                                    <p>{{EmpDetailForPopup.DOB}}</p>
+                                </div>
+
+
+                            </div>
+
+                            <mat-action-row>
+                                <button mat-button color="primary" (click)="nextStep()">Next</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                            <mat-expansion-panel-header>
+                                <div class="container row ml-0 pl-0">
+                                    <div class="col-md-11 pl-0">
+                                        <mat-panel-title>
+                                            <p class="text-primary">Business data</p>
+                                        </mat-panel-title>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <mat-panel-description>
+                                            <mat-icon class="text-primary">business_center</mat-icon>
+                                        </mat-panel-description>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel-header>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <b>Designation</b>
+                                    <p>{{EmpDetailForPopup.DesignationName}}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>Totle Experience</b>
+                                    <p>{{EmpDetailForPopup.TotalExperience}}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>Salary</b>
+                                    <p>{{EmpDetailForPopup.Salary}}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>Refrence</b>
+                                    <p>{{EmpDetailForPopup.Refrence}}</p>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <b>DOJ</b>
+                                    <p>{{EmpDetailForPopup.DOJ}}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>DOL</b>
+                                    <p>{{EmpDetailForPopup.DOL?EmpDetailForPopup.DOL:'Not Avaible'}}</p>
+                                </div>
+
+
+                            </div>
+
+                            <mat-action-row>
+                                <button mat-button color="warn" (click)="prevStep()">Previous |</button>
+                                <button mat-button color="primary" (click)="nextStep()">&nbsp;Next</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                            <mat-expansion-panel-header>
+                                <div class="container row ml-0 pl-0">
+                                    <div class="col-md-11 pl-0">
+                                        <mat-panel-title>
+                                            <p class="text-primary">Security data</p>
+                                        </mat-panel-title>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <mat-panel-description>
+                                            <mat-icon class="text-primary">insert_drive_file</mat-icon>
+                                        </mat-panel-description>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel-header>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <img [src]="EmpDetailForPopup.AadharPhoto" alt="Aadhar card" class="img-thumbnail img-popup-detail">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>Aadhar Card Number</b>
+                                    <p>{{EmpDetailForPopup.AadharNo}}</p>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <img [src]="EmpDetailForPopup.PanPhoto" alt="Aadhar card" class="img-thumbnail img-popup-detail">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <b>Pan Card Number</b>
+                                    <p>{{EmpDetailForPopup.PanNo}}</p>
+                                </div>
+
+
+
+                            </div>
+
+                            <mat-action-row>
+                                <button mat-button color="warn" (click)="prevStep()">Previous |</button>
+                                <button mat-button color="primary" (click)="nextStep()">&nbsp;End</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>

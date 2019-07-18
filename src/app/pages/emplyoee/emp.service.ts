@@ -19,6 +19,11 @@ export class EmpService {
     return this.http.post(environment.apiUrl + '/GetEmployee', this.apiObj);
   }
 
+  getFilterEmployee(obj:any){
+    return this.http.post(environment.apiUrl + '/GetEmployee',obj);
+    
+  }
+
   addemployeedetail(obj: any) {
     return this.http.post(environment.apiUrl + '/CreateEmployee', obj);
   }

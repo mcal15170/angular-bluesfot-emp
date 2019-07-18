@@ -188,7 +188,7 @@ export class NewEmpComponent implements OnInit {
       this.empService.addemployeedetail(formData).subscribe((res: any) => {
         console.log(res);
         if (res.ReturnCode === '1') {
-          this.router.navigate(['/emp']);
+          this.router.navigate(['page/emp']);
           this.toastr.successToastr(this.updateId ? 'Update Employee Suucessfully Done.' : 'Registration Suucessfully Done.', 'Success!', { toastTimeout: 3000 });
         } else {
           this.toastr.errorToastr(this.updateId ? 'Error on server side & Update Employee.' : 'Error on server side & Create Employee.', 'Oops!', { toastTimeout: 3000, showCloseButton: true });

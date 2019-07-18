@@ -9,8 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { FooterComponent } from './pages/ul/footer/footer.component';
 import { HeaderComponent } from './pages/ul/header/header.component';
-import { SharedModule } from './shared/shared.module';
 import { UiServiceService } from './pages/ul/ui-service.service';
+import { CoreModule } from './core/core.module';
 
 
 
@@ -24,12 +24,12 @@ import { UiServiceService } from './pages/ul/ui-service.service';
   ],
   imports: [
     BrowserModule,
-    SharedModule,
     AppRoutingModule,
     PagesModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    CoreModule,
+    ToastrModule.forRoot(),
   ],
   providers: [UiServiceService],
   bootstrap: [AppComponent]

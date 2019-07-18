@@ -1,12 +1,39 @@
 th.mat-sort-header-sorted {
-  color: black;
+    color: black;
 }
 
-table{
-    width:100%
+table {
+    width: 100%
 }
 
-.douImg{
-  width: 80px;
-  height: 50px
+.douImg {
+    width: 80px;
+    height: 50px
+}
+
+.fa-plus-circle {
+    cursor: pointer;
+}
+
+.fa-plus-circle:hover {
+    color: #007bff;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+mat-form-field {
+    margin-right: 12px;
+}
+
+.img-popup-detail {
+    width: 300px;
+    height: 200px;
 }

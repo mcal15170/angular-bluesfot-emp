@@ -14,7 +14,7 @@ export class EmpComponent implements OnInit {
   }
 
   goToForm(){
-    this.router.navigate(['/new-emp']);
+    this.router.navigate(['page/new-emp']);
   }
 
 }

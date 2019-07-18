@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
         this.toastr.successToastr('Login Suucessfully Done.', 'Success!', { toastTimeout: 3000 });
         localStorage.setItem('token', res['ReturnCode']);
         localStorage.setItem('DesignationList', JSON.stringify(res['Data']['DesignationList']));
-        this.router.navigate(['/home']);
+        this.router.navigate(['page/home']);
 
       } else {
         // error
